@@ -61,5 +61,6 @@ module.exports = {
     getRecipeById,
     createRecipe,
     updateRecipeById,
-    deleteRecipeById
+    deleteRecipeById,
+    commentOnRecipe
 }

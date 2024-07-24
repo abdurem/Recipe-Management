@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 
-const { recipeService } = require('../services');
+const { recipeService, commentService } = require('../services');
 
 const createRecipe = catchAsync(async (req, res) => {
     const recipe = await recipeService.createRecipe(req.body);
@@ -37,7 +37,8 @@ const deleteRecipe = catchAsync(async (req, res) => {
     
 
 const commentOnRecipe = catchAsync(async (req, res) => {
-    const recipe = await recipeService.commentOnRecipe(req.params.recipeId, req.body);
+    const comment = await commentService.createComment(req.body);
+    const recipe = await recipeService.commentOnRecipe(req.params.recipeId, comment);
     res.send(recipe);
     });
 

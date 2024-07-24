@@ -28,10 +28,18 @@ const createRecipe = async (recipeBody) => {
 }
 
 const updateRecipeById = async (recipeId, updateBody) => {
+    userId = updateBody.userId;
     const recipe = await getRecipeById(recipeId);
     if (!recipe) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Recipe not found');
     }
+
+    if (userId !== recipe.userId) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized');
+    }
+    // remove userid form updateBody
+    delete updateBody.userId;
+
     Object.assign(recipe, updateBody);
     await recipe.save();
     return recipe;
@@ -41,6 +49,11 @@ const deleteRecipeById = async (recipeId) => {
     const recipe = await getRecipeById(recipeId);
     if (!recipe) {
         throw new ApiError(httpStatus.NOT_FOUND, 'Recipe not found');
+    }
+
+    const userId = recipe.userId;
+    if (userId !== recipe.userId) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized');
     }
     await recipe.remove();
     return recipe;

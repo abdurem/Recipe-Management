@@ -31,6 +31,10 @@ const recipeSchema = mongoose.Schema(
             ref: 'Comment',
         },
     ],
+    preparationTime: {
+        type: Number,
+        required: true,
+    },
 }, 
 {
     timestamps: true,
